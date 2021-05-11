@@ -1,6 +1,6 @@
-# Camel K Kafka Examples
+# Camel K Kafka Quickstart
  
-This example demonstrates how to get started with `Camel K` and `Apache Kafka`. We will show how to quickly set up a Kafka Topic via Red Hat OpenShift Streams for Apache Kafka and be able to use it in a simple Producer/Consumer pattern `Integration`. We also will show how to simplify the credentials management via `Service Binding` when you want to access a Kafka instance in a `KameletBinding`.
+This example demonstrates how to get started with `Camel K` and `Apache Kafka`. We will show how to quickly set up a Kafka Topic via Red Hat OpenShift Streams for Apache Kafka and be able to use it in a simple Producer/Consumer pattern `Integration`. <!-- We also will show how to simplify the credentials management via `Service Binding` when you want to access a Kafka instance in a `KameletBinding`. (available on Camel 1.4.x, see https://github.com/openshift-integration/camel-k-example-kafka/issues/2) --> 
 
 The quickstart is based on the [Apache Camel K upstream Kafka example](https://github.com/apache/camel-k/tree/main/examples/kafka).
 
@@ -21,7 +21,7 @@ Once you've setup your first topic, you must create a set of credentials that yo
 * [Create a service account via UI](https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_7cb5e3f0-4b76-408d-b245-ff6959d3dbf7)
 * [Create a service account via CLI](https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_5199d61c-8435-45b0-83f2-9c8c93ef3e31).
 
-At this stage you should have the following credentials: a `kafka bootstrap URL`, a `service account id` and a `service account secret`.
+At this stage you should have the following credentials: a `kafka bootstrap URL`, a `service account id` and a `service account secret`. You may also want to take note of the `Token endpoint URL` if you choose to use "SASL/OAUTHBEARER" instead of "SASL/Plain" authentication method.
 
 ## Preparing the cluster
 
@@ -76,10 +76,22 @@ You can now proceed to the next section.
 
 ## 2. Secret preparation
 
+You will have 2 different authentication method available in the next sections: `SASL/Plain` or `SASL/OAUTHBearer`. 
+
+### SASL/Plain authentication method
+
 You can take back the secret credentials provided earlier (`kafka bootstrap URL`,`service account id` and `service account secret`). Edit `application.properties` file filling those configuration. Now you can create a secret to contain the sensitive properties in the `application.properties` file that we will pass later to the running `Integration`s:
 
 ```
 oc create secret generic kafka-props --from-file application.properties
+```
+
+### SASL/OAUTHBearer authentication method
+
+You can take back the secret credentials provided earlier (`kafka bootstrap URL`,`service account id`, `service account secret` and `Token endpoint URL`). Edit `application.properties` file filling those configuration. Now you can create a secret to contain the sensitive properties in the `application-oauth.properties` file that we will pass later to the running `Integration`s:
+
+```
+oc create secret generic kafka-props --from-file application-oauth.properties
 ```
 
 ## 3. Running a Kafka Producer integration
@@ -100,6 +112,8 @@ The producer will create a new message and push into the topic and log some info
 ```
 
 > **Note:** Both `SaslSSLKafkaProducer.java` and `SaslSSLKafkaConsumer.java` files specify a runtime `kafka-clients` maven dependency needed in version `1.3.x` of Camel K. It may not be needed to specify it in future Camel K releases.
+
+> **Note:** The integration files specify a runtime `kafka-oauth-client` maven dependency provided by Strimzi. This is only needed if you run the `SASL/OAUTHBearer` authentication method. You may be using a different service or provide your own implementation.
 
 ## 4. Running a Kafka Consumer integration
 

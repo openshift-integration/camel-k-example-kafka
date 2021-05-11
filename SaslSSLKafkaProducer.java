@@ -16,7 +16,7 @@
  */
 
 // kamel run --secret kafka-props SaslSSLKafkaProducer.java --dev
-// camel-k: language=java dependency=mvn:org.apache.kafka:kafka-clients:2.7.0
+// camel-k: language=java dependency=mvn:org.apache.kafka:kafka-clients:2.7.0 dependency=mvn:io.strimzi:kafka-oauth-client:0.7.2
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.kafka.KafkaConstants;
@@ -29,7 +29,7 @@ public class SaslSSLKafkaProducer extends RouteBuilder {
     .routeId("FromTimer2Kafka")
     .setBody()
       .simple("Message #${exchangeProperty.CamelTimerCounter}")
-	  .to("kafka:{{producer.topic}}")
+    .to("kafka:{{producer.topic}}")
     .log("Message correctly sent to the topic!");
   }
 }
