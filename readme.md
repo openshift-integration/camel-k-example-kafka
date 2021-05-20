@@ -1,6 +1,6 @@
 # Camel K Kafka Quickstart
- 
-This example demonstrates how to get started with `Camel K` and `Apache Kafka`. We will show how to quickly set up a Kafka Topic via Red Hat OpenShift Streams for Apache Kafka and be able to use it in a simple Producer/Consumer pattern `Integration`. <!-- We also will show how to simplify the credentials management via `Service Binding` when you want to access a Kafka instance in a `KameletBinding`. (available on Camel 1.4.x, see https://github.com/openshift-integration/camel-k-example-kafka/issues/2) --> 
+
+This example demonstrates how to get started with `Camel K` and `Apache Kafka`. We will show how to quickly set up a Kafka Topic via Red Hat OpenShift Streams for Apache Kafka and be able to use it in a simple Producer/Consumer pattern `Integration`. <!-- We also will show how to simplify the credentials management via `Service Binding` when you want to access a Kafka instance in a `KameletBinding`. (available on Camel 1.4.x, see https://github.com/openshift-integration/camel-k-example-kafka/issues/2) -->
 
 The quickstart is based on the [Apache Camel K upstream Kafka example](https://github.com/apache/camel-k/tree/main/examples/kafka).
 
@@ -76,7 +76,7 @@ You can now proceed to the next section.
 
 ## 2. Secret preparation
 
-You will have 2 different authentication method available in the next sections: `SASL/Plain` or `SASL/OAUTHBearer`. 
+You will have 2 different authentication method available in the next sections: `SASL/Plain` or `SASL/OAUTHBearer`.
 
 ### SASL/Plain authentication method
 
@@ -88,7 +88,7 @@ oc create secret generic kafka-props --from-file application.properties
 
 ### SASL/OAUTHBearer authentication method
 
-You can take back the secret credentials provided earlier (`kafka bootstrap URL`,`service account id`, `service account secret` and `Token endpoint URL`). Edit `application.properties` file filling those configuration. Now you can create a secret to contain the sensitive properties in the `application-oauth.properties` file that we will pass later to the running `Integration`s:
+You can take back the secret credentials provided earlier (`kafka bootstrap URL`,`service account id`, `service account secret` and `Token endpoint URL`). Edit `application-oauth.properties` file filling those configuration. Now you can create a secret to contain the sensitive properties in the `application-oauth.properties` file that we will pass later to the running `Integration`s:
 
 ```
 oc create secret generic kafka-props --from-file application-oauth.properties
