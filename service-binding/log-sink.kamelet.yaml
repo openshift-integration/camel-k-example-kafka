@@ -1,0 +1,15 @@
+apiVersion: camel.apache.org/v1alpha1
+kind: Kamelet
+metadata:
+  name: log-sink
+  labels:
+    camel.apache.org/kamelet.type: "sink"
+spec:
+  definition:
+    title: "Log Sink"
+    description: "Consume events from a channel"
+  flow:
+    from:
+      uri: kamelet:source
+      steps:
+      - to: "log:sink"

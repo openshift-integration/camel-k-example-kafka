@@ -1,0 +1,23 @@
+apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
+metadata:
+  name: beers-to-kafka
+spec:
+  integration:
+    traits:
+      service-binding:
+        configuration:
+          serviceBindings:
+          - rhoas.redhat.com/v1alpha1:KafkaConnection:test
+  source:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: beer-source    
+  sink:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: managed-kafka-sink
+    properties:
+      topic: test
