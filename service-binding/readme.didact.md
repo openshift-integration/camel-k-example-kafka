@@ -59,7 +59,25 @@ oc new-project camel-k-kafka
 ```
 ([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20new-project%20camel-k-kafka&completion=Project%20changed. "Switched to the project that will run Camel K Kafka example"){.didact})
 
-You will need to install three operators: `Camel-K`, `RHOAS` and `Service Binding`.
+You will need to install three operators: `Service Binding`, `Camel-K` and `RHOAS`.
+
+### Service Binding operator
+
+You first need to install the **Service Binding operator**. It needs to be installed before the **Camel K operator**.
+ 
+To do so, go to the OpenShift 4.x web console, login with a cluster admin account and use the OperatorHub menu item on the left to find and install **"Service Binding Operator"**. This operator is in charge to manage the `Service Binding` that are used by `Kamelet`.
+
+You will be given the option to install it globally on the cluster or on a specific namespace. If using a specific namespace, make sure you select the `camel-k-kafka` project from the dropdown list.
+
+Upon successful creation, you should ensure that the Service Binding operator is installed:
+```
+oc get csv
+```
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20get%20csv&completion=Checking%20Cluster%20Service%20Versions. "Opens a new terminal and sends the command above"){.didact})
+
+When Service Binding operator is installed, you should find an entry related to `service-binding-operator` in phase `Succeeded`.
+
+You can now proceed to the next section.
 
 ### Camel K operator
 
@@ -101,22 +119,6 @@ As soon as the operator is installed, you will have to download and install the 
 [Check if the RHOAS CLI ("rhoas") is installed](didact://?commandId=vscode.didact.cliCommandSuccessful&text=rhoas-requirements-status$$rhoas%20help&completion=Checked%rhoas%20tool%20availability "Tests to see if `rhoas` returns a 0 return code"){.didact}
 
 *Status: unknown*{#rhoas-requirements-status}
-
-### Service Binding operator
-
-You need to install the **Service Binding operator**. To do so, go to the OpenShift 4.x web console, login with a cluster admin account and use the OperatorHub menu item on the left to find and install **"Service Binding Operator"**. This operator is in charge to manage the `Service Binding` that are used by `Kamelet`.
-
-You will be given the option to install it globally on the cluster or on a specific namespace. If using a specific namespace, make sure you select the `camel-k-kafka` project from the dropdown list.
-
-Upon successful creation, you should ensure that the Service Binding operator is installed:
-```
-oc get csv
-```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20get%20csv&completion=Checking%20Cluster%20Service%20Versions. "Opens a new terminal and sends the command above"){.didact})
-
-When Service Binding operator is installed, you should find an entry related to `service-binding-operator` in phase `Succeeded`.
-
-You can now proceed to the next section.
 
 ## Preparing the application
 
