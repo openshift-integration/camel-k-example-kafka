@@ -18,6 +18,6 @@ spec:
     ref:
       kind: Kamelet
       apiVersion: camel.apache.org/v1alpha1
-      name: managed-kafka-sink
+      name: kafka-sink
     properties:
       topic: test

@@ -179,28 +179,24 @@ Basically, that means that the RHOAS has set up all the needed configuration tha
 
 Now it's turn to configure all the required `Kamelet` for our application. You can use any of the `Kamelet` provided out of the box, or, create new ones, as we're doing in this example.
 
-We'll use a `beer-source` which is in charge to create a new beer event (a json text with a random beer) every 5 seconds. Then we'll use a `managed-kafka-sink` which is pushing the event to a Kafka topic. We'll use these `Kamelet` in a `beers-to-kafka` `KameletBinding` which will be in charge to take the events and just push to the topic.
+We'll use a `beer-source` which is in charge to create a new beer event (a json text with a random beer) every 5 seconds. Then we'll use a `kafka-sink` Kamelet from camel-k Kamelet catalog, which is pushing the event to a Kafka topic. We'll use these `Kamelet` in a `beers-to-kafka` `KameletBinding` which will be in charge to take the events and just push to the topic.
 
-On the consumer side, we'll use a `managed-kafka-source`, whose goal is to consume events from a Kafka topic and a `log-sink` `Kamelet`, which will simply write to log an event. We'll use these `Kamelet` in a `kafka-to-log` `KameletBinding` which will be in charge to take the events and write to log.
+On the consumer side, we'll use the `kafka-source` Kamelet from camel-k Kamelet catalog, whose goal is to consume events from a Kafka topic and a `log-sink` `Kamelet`, which will simply write to log an event. We'll use these `Kamelet` in a `kafka-to-log` `KameletBinding` which will be in charge to take the events and write to log.
 
 Let's start by creating the Kamelets:
 ```
 $ oc apply -f beer-source.kamelet.yaml
-$ oc apply -f managed-kafka-sink.kamelet.yaml
-$ oc apply -f managed-kafka-source.kamelet.yaml
 $ oc apply -f log-sink.kamelet.yaml
 $ oc get kamelets
 NAME                   PHASE
 beer-source            Ready
 log-sink               Ready
-managed-kafka-sink     Ready
-managed-kafka-source   Ready
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20apply%20-f%20beer-source.kamelet.yaml%0Aoc%20apply%20-f%20managed-kafka-sink.kamelet.yaml%0Aoc%20apply%20-f%20managed-kafka-source.kamelet.yaml%0Aoc%20apply%20-f%20log-sink.kamelet.yaml%0Aoc%20get%20kamelets&completion=Kamelets%20created. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20apply%20-f%20beer-source.kamelet.yaml%0Aoc%20apply%20-f%20log-sink.kamelet.yaml%0Aoc%20get%20kamelets&completion=Kamelets%20created. "Opens a new terminal and sends the command above"){.didact})
 
 ## 3. Running an event producer
 
-We can now create an event producer `Integration`. The goal is to get the `beer-source` and to push to a Kafka topic via `managed-kafka-sink`. We can create a `KameletBinding` for this purpose:
+We can now create an event producer `Integration`. The goal is to get the `beer-source` and to push to a Kafka topic via `kafka-sink`. We can create a `KameletBinding` for this purpose:
 
 ```
 $ oc apply -f beers-to-kafka.yaml
@@ -235,11 +231,11 @@ spec:
     properties:
       topic: test
 ```
-You can notice that we had to specify a `service-binding` trait configuration which is pointing to the `KafkaConnection:test` that we created previously. With this configuration, we'll tell the various operators involved to cooperate in order to resolve the configuration parameters defined in the `managed-kafka-sink` Kamelet.
+You can notice that we had to specify a `service-binding` trait configuration which is pointing to the `KafkaConnection:test` that we created previously. With this configuration, we'll tell the various operators involved to cooperate in order to resolve the configuration parameters defined in the `kafka-sink` Kamelet.
 
 ## 4. Running an event consumer
 
-Now, open another shell and run the consumer integration. The goal is to get the `managed-kafka-source` events and print out to a log with the `log-sink` Kamelet. We can create a `KameletBinding` for this purpose:
+Now, open another shell and run the consumer integration. The goal is to get the `kafka-source` events and print out to a log with the `log-sink` Kamelet. We can create a `KameletBinding` for this purpose:
 
 ```
 $ oc apply -f kafka-to-log.yaml
