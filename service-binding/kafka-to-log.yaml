@@ -13,7 +13,7 @@ spec:
     ref:
       kind: Kamelet
       apiVersion: camel.apache.org/v1alpha1
-      name: managed-kafka-source
+      name: kafka-source
     properties:
       topic: test
   sink:
