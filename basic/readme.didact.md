@@ -80,7 +80,7 @@ The OpenShift CLI tool ("oc") will be used to interact with the OpenShift cluste
 
 In order to execute this demo, you will need to have an OpenShift cluster with the correct access level, the ability to create projects and install operators as well as the Apache Camel K CLI installed on your local system.
 
-[Check if you're connected to an OpenShift cluster](didact://?commandId=vscode.didact.requirementCheck&text=cluster-requirements-status$$oc%20get%20project%20camel-k-kafka&completion=OpenShift%20is%20connected. "Tests to see if `oc get project` returns a result"){.didact}
+[Check if you're connected to an OpenShift cluster](didact://?commandId=vscode.didact.cliCommandSuccessful&text=cluster-requirements-status$$oc%20get%20project%20camel-k-kafka&completion=OpenShift%20is%20connected. "Tests to see if `oc get project` returns a result"){.didact}
 
 *Status: unknown*{#cluster-requirements-status}
 
@@ -130,7 +130,7 @@ You can take back the secret credentials provided earlier (`kafka bootstrap URL`
 ```
 oc create secret generic kafka-props --from-file application.properties
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20create%20secret%20generic%20kafka-props%20--from-file%20application.properties&completion=Secret%20created. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20create%20secret%20generic%20kafka-props%20--from-file%20basic/application.properties&completion=Secret%20created. "Opens a new terminal and sends the command above"){.didact})
 
 ### SASL/OAUTHBearer authentication method
 
@@ -139,7 +139,7 @@ You can take back the secret credentials provided earlier (`kafka bootstrap URL`
 ```
 oc create secret generic kafka-props --from-file application-oauth.properties
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20create%20secret%20generic%20kafka-props%20--from-file%20application-oauth.properties&completion=Secret%20created. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$oc%20create%20secret%20generic%20kafka-props%20--from-file%20basic/application-oauth.properties&completion=Secret%20created. "Opens a new terminal and sends the command above"){.didact})
 
 ## 3. Running a Kafka Producer integration
 
@@ -148,7 +148,7 @@ At this stage, run a producer integration. This one will fill the topic with a m
 ```
 kamel run --secret kafka-props SaslSSLKafkaProducer.java --dev
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20--secret%20kafka-props%20SaslSSLKafkaProducer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20--secret%20kafka-props%20basic/SaslSSLKafkaProducer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
 The producer will create a new message and push into the topic and log some information.
 
@@ -171,7 +171,7 @@ Now, open another shell and run the consumer integration using the command:
 kamel run --secret kafka-props SaslSSLKafkaConsumer.java --dev
 ```
 
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20--secret%20kafka-props%20SaslSSLKafkaConsumer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelConsumerTerm$$kamel%20run%20--secret%20kafka-props%20basic/SaslSSLKafkaConsumer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
 A consumer will start logging the events found in the Topic:
 
