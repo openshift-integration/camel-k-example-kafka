@@ -16,7 +16,7 @@
  */
 
 // kamel run --secret kafka-props SaslSSLKafkaConsumer.java --dev
-// camel-k: language=java dependency=mvn:org.apache.kafka:kafka-clients:2.7.0 dependency=mvn:io.strimzi:kafka-oauth-client:0.7.2
+// camel-k: language=java dependency=mvn:org.apache.camel.quarkus:camel-quarkus-kafka dependency=mvn:io.strimzi:kafka-oauth-client:0.7.1.redhat-00003
 
 import org.apache.camel.builder.RouteBuilder;
 
