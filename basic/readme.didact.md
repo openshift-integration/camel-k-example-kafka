@@ -34,6 +34,15 @@ Once you've setup your first topic, you must create a set of credentials that yo
 
 At this stage you should have the following credentials: a `kafka bootstrap URL`, a `service account id` and a `service account secret`. You may also want to take note of the `Token endpoint URL` if you choose to use "SASL/OAUTHBEARER" instead of "SASL/Plain" authentication method.
 
+#### Topic Authorisation
+
+To access RHOAS Kafka topics, you need to authorise the service account to access certain topics, i.e:
+
+```
+rhoas kafka acl grant-access --consumer --service-account $CLIENT_ID --topic $TOPIC_NAME --group all
+```
+For more details, please consult the [RHOAS Documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1).
+
 ## Preparing the cluster
 
 This example can be run on any OpenShift 4.3+ cluster or a local development instance (such as [CRC](https://github.com/code-ready/crc)). Ensure that you have a cluster available and login to it using the OpenShift `oc` command line tool.
