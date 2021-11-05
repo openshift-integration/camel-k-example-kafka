@@ -39,7 +39,7 @@ At this stage you should have the following credentials: a `kafka bootstrap URL`
 To access RHOAS Kafka topics, you need to authorise the service account to access certain topics, i.e:
 
 ```
-rhoas kafka acl grant-access --consumer --service-account $CLIENT_ID --topic $TOPIC_NAME --group all
+rhoas kafka acl grant-access --producer --consumer --service-account $CLIENT_ID --topic $TOPIC_NAME --group all
 ```
 For more details, please consult the [RHOAS Documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1).
 
