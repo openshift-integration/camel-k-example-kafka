@@ -19,17 +19,17 @@
 // camel-k: language=java dependency=mvn:org.apache.camel.quarkus:camel-quarkus-kafka dependency=mvn:io.strimzi:kafka-oauth-client:0.7.1.redhat-00003
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.kafka.KafkaConstants;
 
 public class SaslSSLKafkaProducer extends RouteBuilder {
-  @Override
-  public void configure() throws Exception {
-  log.info("About to start route: Timer -> Kafka ");
-  from("timer:foo")
-    .routeId("FromTimer2Kafka")
-    .setBody()
-      .simple("Message #${exchangeProperty.CamelTimerCounter}")
-    .to("kafka:{{producer.topic}}")
-    .log("Message correctly sent to the topic!");
-  }
+    @Override
+    public void configure() throws Exception {
+        log.info("About to start route: Timer -> Kafka ");
+
+        from("timer:foo")
+            .routeId("FromTimer2Kafka")
+            .setBody()
+                .simple("Message #${exchangeProperty.CamelTimerCounter}")
+            .to("kafka:{{producer.topic}}")
+            .log("Message correctly sent to the topic!");
+    }
 }
