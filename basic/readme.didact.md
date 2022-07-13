@@ -155,9 +155,9 @@ oc create secret generic kafka-props --from-file application-oauth.properties
 At this stage, run a producer integration. This one will fill the topic with a message, every second:
 
 ```
-kamel run --secret kafka-props SaslSSLKafkaProducer.java --dev
+kamel run --config secret:kafka-props SaslSSLKafkaProducer.java --dev
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20--secret%20kafka-props%20basic/SaslSSLKafkaProducer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20--config%20secret%3Akafka-props%20basic/SaslSSLKafkaProducer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
 The producer will create a new message and push into the topic and log some information.
 
@@ -177,10 +177,10 @@ The producer will create a new message and push into the topic and log some info
 Now, open another shell and run the consumer integration using the command:
 
 ```
-kamel run --secret kafka-props SaslSSLKafkaConsumer.java --dev
+kamel run --config secret:kafka-props SaslSSLKafkaConsumer.java --dev
 ```
 
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelConsumerTerm$$kamel%20run%20--secret%20kafka-props%20basic/SaslSSLKafkaConsumer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelConsumerTerm$$kamel%20run%20--config%20secret%3Akafka-props%20basic/SaslSSLKafkaConsumer.java%20--dev&completion=Camel%20K%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
 A consumer will start logging the events found in the Topic:
 

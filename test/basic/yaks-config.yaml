@@ -1,0 +1,35 @@
+config:
+  runtime:
+    env:
+      - name: YAKS_CAMELK_AUTO_REMOVE_RESOURCES
+        value: false
+      - name: YAKS_KUBERNETES_AUTO_REMOVE_RESOURCES
+        value: false
+      - name: YAKS_CAMELK_SUPPORT_VARIABLES_IN_SOURCES
+        value: false
+      - name: CITRUS_TYPE_CONVERTER
+        value: camel
+    resources:
+      - application.properties
+      - ../../basic/SaslSSLKafkaProducer.java
+      - ../../basic/SaslSSLKafkaConsumer.java
+  dump:
+    enabled: true
+    failedOnly: true
+    includes:
+      - app=camel-k
+pre:
+  - name: Install Kafka
+    if: env:CI=true
+    script: infra/install.sh
+  - name: Setup Kafka roles
+    if: env:CI=true
+    run: |
+      yaks role --add strimzi
+post:
+  - name: print dump
+    if: env:CI=true && failure()
+    run: kamel dump
+  - name: Uninstall Kafka
+    if: env:CI=true
+    script: infra/uninstall.sh
