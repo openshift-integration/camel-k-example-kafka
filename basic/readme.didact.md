@@ -2,7 +2,7 @@
 
 This example demonstrates how to get started with `Camel K` and `Apache Kafka`. We will show how to quickly set up a Kafka Topic via Red Hat OpenShift Streams for Apache Kafka and be able to use it in a simple Producer/Consumer pattern `Integration`.
 
-The quickstart is based on the [Apache Camel K upstream Kafka example](https://github.com/apache/camel-k/tree/main/examples/kafka).
+The quickstart is based on the [Kafka example in the apache/camel-k-examples repo](https://github.com/apache/camel-k-examples/tree/main/generic-examples/kafka).
 
 ## Before you begin
 
